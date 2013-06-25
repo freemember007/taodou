@@ -20,7 +20,6 @@ app.configure(function(){
   app.use(require('stylus').middleware({ src: __dirname + '/public' }));
   app.use(app.router);
   app.use(express.static(__dirname + '/public'));
-  app.use(express.static(__dirname + '/components'));
 });
 
 app.configure('development', function(){

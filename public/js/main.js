@@ -1,12 +1,21 @@
-// var tempFn = doT.template("<h1>Here is a sample template {{=it.foo}}</h1>");
-var baseURL = location.protocol + '//' + location.host + '/'
+require.config({
+	paths: {
+		'jquery': 'components/jquery/jquery.min',
+		'bootstrap': 'components/bootstrap/docs/assets/js/bootstrap.min',
+		'doT': 'lib/doT.min',
+		'text': 'lib/text',
+		'tmpl': 'tmpl/tmpl'
+	}
+})
 
+require(['jquery', 'tmpl'],function($, tmpl){
+	
+	var baseURL = location.protocol + '//' + location.host + '/'
 
-var regView = regTmpl();
-$('body').append(regView);
+	var regView = tmpl.regForm();
 
+	$('body').append(regView);
 
-// $(document).ready(function(){
 	$('#regForm').submit(function(){
 	  $.post(baseURL + "api/reg",{
 	  		email: $('#inputEmail').val(),
@@ -20,7 +29,7 @@ $('body').append(regView);
 			  	$('#regForm').prepend("<div class='alert alert-success' id='regAlert'>" + data.info + "</div>");
 			  	function loginOK(){
 			  		$('#regForm').remove();
-				  	var listView = listTmpl();
+				  	var listView = tmpl.mainList();
 				  	$('body').append(listView);
 			  	}
 			  	setTimeout(loginOK, 500);
@@ -34,4 +43,4 @@ $('body').append(regView);
 		);
 		return false;
 	});	
-// })
+})

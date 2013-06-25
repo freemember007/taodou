@@ -31,7 +31,7 @@ app.configure('production', function(){
 });
 
 // Routes
-app.get('/', routes.index);
+// app.get('/', routes.index);
 app.post('/api/reg', routes.reg);
 app.post('/api/login', routes.login);
 

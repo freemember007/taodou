@@ -10,8 +10,9 @@ var app = module.exports = express.createServer();
 // Configuration
 
 app.configure(function(){
+  app.set("view options", {layout: false});
   app.set('views', __dirname + '/views');
-  app.set('view engine', 'jade');
+  app.set('view engine', 'ejs');
   app.use(express.bodyParser());
   app.use(express.methodOverride());
   app.use(express.cookieParser());
@@ -19,6 +20,7 @@ app.configure(function(){
   app.use(require('stylus').middleware({ src: __dirname + '/public' }));
   app.use(app.router);
   app.use(express.static(__dirname + '/public'));
+  app.use(express.static(__dirname + '/components'));
 });
 
 app.configure('development', function(){
@@ -30,9 +32,10 @@ app.configure('production', function(){
 });
 
 // Routes
-
 app.get('/', routes.index);
+app.post('/api/reg', routes.reg);
+app.post('/api/login', routes.login);
 
-app.listen(3000, function(){
+app.listen(process.env.VCAP_APP_PORT || 3000, function(){
   console.log("Express server listening on port %d in %s mode", app.address().port, app.settings.env);
 });

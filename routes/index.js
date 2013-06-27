@@ -5,10 +5,45 @@
 var mongoose = require('mongoose')
   , models = require('../models')
   , User = models.User
+  , Goods = models.Goods
   , crypto = require('crypto');
 
 mongoose.connect('mongodb://localhost/taodou');
 
+/*
+ * 商品路由.
+ */
+exports.Goods = function(req, res) {
+  if (req.method == 'POST') {
+    var newGoods = new Goods({
+      title: req.body.title,
+      url: req.body.url,
+      image: req.body.image,
+      mall: req.body.site,
+      catelog: req.body.catelog,
+      oldPrice: req.body.price,
+      newPrice: req.body.newPrice
+    });
+
+    newGoods.save(function(err){
+      if (err) {
+        console.log(err);
+        return res.json({type: 'fail', info: err.message })
+      }
+      return res.json({type: 'success', info: '收藏成功！' })
+    })
+  } else if (req.method == 'GET') {
+      Goods.find({}, function(err,user){
+      if (err) {
+        console.log(err);
+        return res.json({type: 'fail', data: err.message })
+      }
+      return res.json({type: 'success', data: user })
+    })
+  }
+  
+
+};
 
 /*
  * POST Register.
@@ -30,6 +65,8 @@ exports.reg = function(req, res) {
         console.log(err);
   			return res.json({type: 'fail', info: err.message })
   		}
+      // res.cookie('user', newUser, {path: '/', httpOnly: false});
+      req.session.user = newUser;
 			return res.json({type: 'success', info: '注册成功！' })
   	})
 
@@ -60,6 +97,23 @@ exports.login = function(req, res) {
 };
 
 exports.index = function(req, res) {
-	res.redirect('/index.html')
+  // console.log('current user: '+ req.cookies.user);
+  // console.log('current user: '+ req.session.user);
+  if ((!req.session.user)) {
+    fs = require("fs");
+    res.writeHead(200, {"Content-Type": "text/html"});
+    fs.readFile('./index.html', function(err, data) {
+      return res.end(data);
+    });
+    // res.redirect('index.html')
+  } else {
+    // res.redirect('mainlist.html') 
+    fs = require("fs");
+    res.writeHead(200, {"Content-Type": "text/html"});
+    fs.readFile('./main.html', function(err, data) {
+      return res.end(data);
+    });
+  }
+	
 };
 

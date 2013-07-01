@@ -1,12 +1,40 @@
-<div class="item">
-	<img class="img" src="">
-	<a class="title" target="_blank" href="" id="title0">i-mu 幻响 i-dop苹果音箱 iphone/iPod充电底座播放器 （经典创意imac台灯造型）</a>
-	<span class="firstPrice">原价:&nbsp;¥138.00</span>
-	<span class="lastPrice">现价:&nbsp;¥149.00</span>
-	<span class="priceChange">降幅:&nbsp;
-		<span class="percent" style="color: red;">-8%</span>
-	</span>
-	<span class="site">亚马逊中国</span>
-	<button class="removeButton" id="button0">不再追踪
-	</button>
-</div>
+{{~it :value:index}}
+	<div class='span3 item lfloat'>
+
+		<!--******************** 略缩图 ***********************-->
+
+		<a href='#detail' class='thumbLink'>
+			<img width='150' src='{{=value.get('image')}}'
+			info='{{!JSON.stringify(value.attributes)}}' class='img-polaroid' alt='aaa' />
+		</a>
+
+		<!--******************** 描述区块 ***********************-->
+
+		<div class="itemDesc">
+			<!-- 商品标题 -->
+			<a class='title' target='_blank' href='{{=value.get('url')}}'>{{=value.get('title')}}</a>
+			<br/>
+
+			<!-- 价格信息 -->
+			<div class="itemBottom">
+				<!-- <span class=''>原价:{{=value.get('oldPrice')}}</span> -->
+				<span class='itemSite'>{{=value.get('mall')}}</span>
+				<span class='itemPrice'>￥{{=value.get('newPrice')}}</span>
+			</div>
+			
+			<!-- <span class='priceChange'>降幅:&nbsp;
+				<span class='percent' style='color: red;'>-8%</span>
+			</span> -->
+
+			<!-- 站点 -->
+			<!-- <span class='site'>{{=value.get('mall')}}</span> -->
+
+			<!-- 按钮区 -->
+			<div class="itemButtonArea">
+				<!-- <button class='btn-mini' id='button0'>不再追踪</button>	 -->
+			</div>
+			
+		</div>
+		
+	</div>
+{{~}}

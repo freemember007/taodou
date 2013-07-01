@@ -1,33 +1,42 @@
 define([
-  'backbone',
-  'views/MainView',
-], function(Backbone, MainView) {
-  
-  var MainRouter = Backbone.Router.extend({
+	'backbone',
+	'views/MainView',
+	'views/DetailView',
+], function(Backbone, MainView, DetailView) {
+	
+	var MainRouter = Backbone.Router.extend({
 
-    routes: {
-      'projects': 'showProjects',      
-      '*actions': 'defaultAction'
-    },
+		routes: {
+			'logout': 'logout',
+			'detail': 'showDetail',
+			'*actions': 'defaultAction'
+		},
 
-    showProjects: function() {
-      alert('a')
-    },
+		logout: function() {
+			$.get('/api/logout',function(err,res){
+				location.assign('/');
+			})
+		},
 
-    defaultAction: function() {
-      var mainView = new MainView();
-      mainView.render();
-    }
-    
-  });
-  
-  var init = function(){
-    var mainRouter = new MainRouter;
-    Backbone.history.start();
-  };
+		showDetail: function() {
+			// alert('a')
+			var detailView = new DetailView();
+		},
 
-  return { 
-    init: init
-  };
+		defaultAction: function() {
+			var mainView = new MainView();
+			mainView.render();
+		}
+		
+	});
+	
+	var init = function(){
+		var mainRouter = new MainRouter;
+		Backbone.history.start();
+	};
+
+	return { 
+		init: init
+	};
 
 });

@@ -4,7 +4,6 @@ require.config({
 		'bootstrap': 'components/bootstrap/docs/assets/js/bootstrap.min',
 		'doT': 'components/doT/doT.min',
 		'text': 'components/text/text',
-		'tmpl': 'tmpl/tmpl',
 		'backbone': 'components/backbone-amd/backbone-min',
 		'underscore': 'components/underscore-amd/underscore-min'
 	},
@@ -17,7 +16,7 @@ require.config({
 })
 
 require([
-  'indexRouter',
+	'indexRouter',
 ], function(indexRouter){
-  indexRouter.init();
+	indexRouter.init();
 });

@@ -4,9 +4,12 @@ require.config({
 		'bootstrap': 'components/bootstrap/docs/assets/js/bootstrap.min',
 		'doT': 'components/doT/doT.min',
 		'text': 'components/text/text',
-		'mainTmpl': 'tmpl/mainTmpl',
 		'backbone': 'components/backbone-amd/backbone-min',
-		'underscore': 'components/underscore-amd/underscore-min'
+		'underscore': 'components/underscore-amd/underscore-min',
+		// 'masonry': 'components/masonry/masonry',
+		// 'outlayer': 'components/outlayer/outlayer',
+		// 'get-size': 'components/get-size/get-size',
+		// 'get-style-property': 'components/get-style-property/get-style-property'
 	},
 	// shim: {
 	// 	'backbone': {
@@ -17,7 +20,7 @@ require.config({
 })
 
 require([
-  'mainRouter',
+	'mainRouter',
 ], function(mainRouter){
-  mainRouter.init();
+	mainRouter.init();
 });

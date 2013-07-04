@@ -40,7 +40,7 @@ app.get('/', routes.index);
 app.post('/api/reg', routes.reg);
 app.post('/api/login', routes.login);
 app.get('/api/logout', routes.logout);
-app.get('/api/Goods', routes.Goods);
+app.get('/api/Goods/:type?/:name?', routes.Goods);
 app.post('/api/Goods', routes.Goods);
 
 app.listen(process.env.VCAP_APP_PORT || 3000, function(){

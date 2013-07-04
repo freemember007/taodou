@@ -1,12 +1,12 @@
 /**
- * Module dependencies.
+ * 模块依赖.
  */
-
 var mongoose = require('mongoose')
 	, models = require('../models')
 	, User = models.User
 	, Goods = models.Goods
-	, crypto = require('crypto');
+	, crypto = require('crypto')
+	, fetch = require('../fetchOne.js');
 
 mongoose.connect('mongodb://localhost/taodou');
 
@@ -15,27 +15,36 @@ mongoose.connect('mongodb://localhost/taodou');
  */
 exports.Goods = function(req, res) {
 	if (req.method == 'POST') {
-		console.log(req.body.title);
-		console.log(unescape(req.body.title));
-		var newGoods = new Goods({
-			title: unescape(req.body.title), //经测试，crossrider发布时用的是escape了, 不是encodeURI。是否必须？
-			url: req.body.url,
-			image: req.body.image,
-			mall: unescape(req.body.site),
-			catelog: req.body.catelog,
-			oldPrice: req.body.price,
-			newPrice: req.body.newPrice
-		});
-
-		newGoods.save(function(err){
-			if (err) {
-				console.log(err);
-				return res.json({type: 'fail', info: err.message })
-			}
-			return res.json({type: 'success', info: '收藏成功！' })
-		})
+		if (req.body.title) { //来自插件
+			handlePostData(req.body);
+		} else { //来自WEB
+			fetch.startFetch(req.body.originURL, handlePostData);
+		}
+		function handlePostData(postData){
+			console.log(unescape(postData.title));
+			var newGoods = new Goods({
+				title: unescape(postData.title), //为兼容插件，crossrider发布时用的是escape了, 不是encodeURI。
+				url: postData.url,
+				image: postData.image,
+				mall: unescape(postData.site),
+				catelog: postData.catelog,
+				oldPrice: postData.price,
+				newPrice: postData.newPrice
+			});
+			newGoods.save(function(err){
+				if (err) {
+					console.log(err);
+					return res.json({type: 'fail', info: err.message })
+				}
+				return res.json({type: 'success', info: '收藏成功！' })
+			})
+		}
 	} else if (req.method == 'GET') {
-			Goods.find({}, function(err,goods){
+			var q = {};
+			req.params.type == 'mall' ? q.mall =
+			req.params.name||/.*?/ : q.mall = req.params.name||/.*?/;
+			//字段加catelog后，把后面的mall改为catelog
+			Goods.find(q, null, {sort: [['_id', -1]]}, function(err,goods){
 			if (err) {
 				console.log(err);
 				return res.json({type: 'fail', data: err.message })
@@ -43,8 +52,6 @@ exports.Goods = function(req, res) {
 			return res.json({type: 'success', data: goods })
 		})
 	}
-	
-
 };
 
 /*

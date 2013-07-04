@@ -6,16 +6,17 @@ define([
 
 	var GoodsCollection = Backbone.Collection.extend({
 			
-			model: GoodsModel,
+		model: GoodsModel,
 
-			url: '/api/Goods',
-					
-			parse : function(res) {
-					return res.data;
-			}
+		url: '/api/Goods',
+		//与model的urlRoot的区别？
+				
+		parse : function(res) {
+			return res.data;
+		}
 		 
 	});
-
-	return GoodsCollection;
+	var singleGoodsCollection = new GoodsCollection();
+	return singleGoodsCollection;
 
 });

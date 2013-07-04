@@ -8,6 +8,12 @@ define([
 	
     // ------------------ 定义路由组件 ---------------- //
     var goodsCollection = new GoodsCollection();
+    var mainView = new MainView({collection: goodsCollection});
+    var leftView = new LeftView();
+    leftView.render();
+    var topView = new TopView();
+    topView.render();
+    alert($('#breadcrumb').text())
 	var MainRouter = Backbone.Router.extend({
 
 		routes: {
@@ -24,31 +30,12 @@ define([
 
         /* 按商城或类别显示 */
         showType: function(type, name) { 
-            goodsCollection.url =  '/api/Goods/' + type + '/' + name;
-            goodsCollection.fetch({
-                success: function(collection, res, option) {
-					console.log('fetch ok!');                    
-                },
-                error: function(collection, res, option) {
-                    alert(res);
-                }
-            });
+            mainView.collection.url =  '/api/Goods/' + type + '/' + name;
+            mainView.collection.fetch();
         },
 
         defaultAction: function() {
-            var mainView = new MainView({collection: goodsCollection});
-            goodsCollection.fetch({
-                success: function(collection, res, option) {
-					console.log('fetch ok!');                    
-                },
-                error: function(collection, res, option) {
-                    alert(res);
-                }
-            })
-            var leftView = new LeftView();
-            leftView.render();
-            var topView = new TopView();
-            topView.render();
+            mainView.collection.fetch()
 		}
 		
     });

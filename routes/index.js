@@ -34,9 +34,9 @@ exports.Goods = function(req, res) {
 			newGoods.save(function(err){
 				if (err) {
 					console.log(err);
-					return res.json({type: 'fail', info: err.message })
+					return res.json({type: 'fail', data: err.message })
 				}
-				return res.json({type: 'success', info: '收藏成功！' })
+				return res.json({type: 'success', _id: newGoods.id, data: newGoods }) //前面的为_id, 后面id和_id均可
 			})
 		}
 	} else if (req.method == 'GET') {
@@ -67,16 +67,16 @@ exports.reg = function(req, res) {
 	});
 	User.find({email: newUser.email}, function(err,user){
 		if (user.length != 0) {
-			return res.json({type: 'fail', info: '邮箱已存在！' })
+			return res.json({type: 'fail', data: '邮箱已存在！' })
 		}
 		newUser.save(function(err){
 			if (err) {
 				console.log(err);
-				return res.json({type: 'fail', info: err.message })
+				return res.json({type: 'fail', data: err.message })
 			}
 			// res.cookie('user', newUser, {path: '/', httpOnly: false});
 			req.session.user = newUser;
-			return res.json({type: 'success', info: '注册成功！' })
+			return res.json({type: 'success', data: '注册成功！' })
 		})
 
 	})

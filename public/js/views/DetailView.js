@@ -11,7 +11,7 @@ define([
 
 		// -------------------------- 相关元件 -------------------------- //
 
-		el: $('body'), // 注意：event必须在el范围内
+		el: $('body'), 
 
 		template: doT.template(detailText),
 
@@ -22,26 +22,22 @@ define([
 		},
 		
 		render: function(){
-			$(this.template(this.model)).appendTo(this.$el).hide().fadeIn().slideDown();
+			$(this.template(this.model)).appendTo(this.$el).hide().fadeIn();
 		},
 
 		// ----------------------------- 事件 --------------------- //
 
 		events: {
 			'click #close': 'close',
-			'keypress': 'cancel'
+			'keypress': 'close'
 		},
 
-	 	close: function(){
-			$('#modal-wrapper').fadeOut('fast', function(){$(this).remove()}); // 重要！否则事件监听会出问题
-		},
-	
-		cancel: function(e){
-			if(e.keyCode == 27){
-				this.close();
+		close: function(e){
+			if (e.type === 'click' || e.keyCode === 27){
+				$('#modal-wrapper').fadeOut('fast', function(){$(this).remove()});
+				return false;
 			}
 		}
-
 	})
 
 	return DetailView;

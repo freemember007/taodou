@@ -5,7 +5,8 @@ define([
 	'doT',
 	'text!/js/tmpl/topText.html', 
 	'views/MainView', 
-	], function($, Backbone, _, doT, topText, MainView){
+	'models/GoodsModel'
+	], function($, Backbone, _, doT, topText, MainView, GoodsModel){
 		
 	var TopView = Backbone.View.extend({
 
@@ -18,7 +19,7 @@ define([
 		// -------------------------- 初始化及render -------------------------- //
 
 		initialize : function(){
-			//_.bindAll(this, 'render');
+			//alert(goodsCollection);
 		},
 		
 		render: function(){
@@ -32,11 +33,18 @@ define([
 		
 		addGoods: function(){
 			var originURL = $('#add-input').val();
-			$.post('/api/Goods',{originURL:originURL}, function(data){
-				alert(data.info);
-				//alert(MainView.model); //underfined
+			/*$.post('/api/Goods',{originURL:originURL}, function(data){*/
+				//alert(data.info);
+			/*})*/
+			var goodsModel = new GoodsModel({originURL:originURL});
+			goodsModel.save(null, {
+				success: function(model, response, options){
+					alert('a')
+					alert(model.id);
+					console.log(response.info);
+					console.log(options);
+				}
 			})
-
 		}
 	})
 

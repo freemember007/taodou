@@ -5,8 +5,9 @@ define([
 	'doT',
 	'text!/js/tmpl/topText.html', 
 	'views/MainView', 
-	'models/GoodsModel'
-	], function($, Backbone, _, doT, topText, MainView, GoodsModel){
+	'models/GoodsModel',
+	'collections/GoodsCollection'
+	], function($, Backbone, _, doT, topText, MainView, GoodsModel, goodsCollection){
 		
 	var TopView = Backbone.View.extend({
 
@@ -19,7 +20,7 @@ define([
 		// -------------------------- 初始化及render -------------------------- //
 
 		initialize : function(){
-			//alert(goodsCollection);
+			
 		},
 		
 		render: function(){
@@ -32,17 +33,16 @@ define([
 		},
 		
 		addGoods: function(){
+			console.log(goodsCollection.length);
 			var originURL = $('#add-input').val();
-			/*$.post('/api/Goods',{originURL:originURL}, function(data){*/
-				//alert(data.info);
-			/*})*/
 			var goodsModel = new GoodsModel({originURL:originURL});
 			goodsModel.save(null, {
 				success: function(model, response, options){
-					alert('a')
-					alert(model.id);
-					console.log(response.info);
-					console.log(options);
+					console.log(goodsModel.id);
+					goodsModel.clear().set(response.data); // 重设model属性
+					console.log(goodsModel);
+					goodsCollection.add(goodsModel, {at: 0}); // 为何会触发render事件？
+					console.log(goodsCollection.length);
 				}
 			})
 		}

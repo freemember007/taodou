@@ -4,16 +4,16 @@ define([
 	'views/MainView',
     'views/DetailView',
     'collections/GoodsCollection'
-], function(LeftView, TopView, MainView, DetailView, GoodsCollection) {
+], function(LeftView, TopView, MainView, DetailView, goodsCollection) {
 	
     // ------------------ 定义路由组件 ---------------- //
-    var goodsCollection = new GoodsCollection();
+   // var goodsCollection = new GoodsCollection();
     var mainView = new MainView({collection: goodsCollection});
     var leftView = new LeftView();
     leftView.render();
     var topView = new TopView();
     topView.render();
-    alert($('#breadcrumb').text())
+    //alert($('#breadcrumb').text()) //经测试，路由可以操控页面所有元素
 	var MainRouter = Backbone.Router.extend({
 
 		routes: {

@@ -26,7 +26,7 @@ define([
 		// -------------------------- 初始化及render -------------------------- //
 
         initialize : function(){
-            this.listenTo(this.collection, 'sync', this.render); // add事件为何不行？
+            this.listenTo(this.collection, 'sync', this.render); // 别用add，会renderN次！
 			// var container = $('#masonry');
 			// var msnry = new Masonry( container, {
 			//   // options...

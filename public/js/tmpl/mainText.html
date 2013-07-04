@@ -5,7 +5,8 @@
 
 		<a href='#detail' class='thumbLink'>
 			<img width='150' src='images/grey.gif' data-original='{{=value.get('image')}}'
-			info='{{!JSON.stringify(value.attributes)}}' class='img-polaroid lazy' alt='aaa' />
+            info='{{!JSON.stringify(value.attributes)}}'
+            modelID='{{=value.get('_id')}}' class='img-polaroid lazy' alt='' />
 		</a>
 
 		<!--******************** 描述区块 ***********************-->

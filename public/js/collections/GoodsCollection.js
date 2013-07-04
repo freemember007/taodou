@@ -16,7 +16,6 @@ define([
 		}
 		 
 	});
-	var singleGoodsCollection = new GoodsCollection();
-	return singleGoodsCollection;
+	return GoodsCollection;
 
 });

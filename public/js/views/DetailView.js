@@ -18,11 +18,11 @@ define([
 		// ------------------------ 初始化及render --------------------- //
 
 		initialize : function(){
-			// console.log('initialized!')
+			this.listenTo(this.model, 'change', this.render);
 		},
 		
-		render: function(data){
-			$(this.template(data)).appendTo($('body')).hide().fadeIn().slideDown();
+		render: function(){
+			$(this.template(this.model)).appendTo(this.$el).hide().fadeIn().slideDown();
 		},
 
 		// ----------------------------- 事件 --------------------- //
@@ -33,10 +33,7 @@ define([
 		},
 
 	 	close: function(){
-			$('#modal-wrapper').fadeOut().remove(); // 重要！否则事件监听会出问题
-			//location.hash = null;
-			this.$el.unbind('keypress'); 
-			return false;
+			$('#modal-wrapper').fadeOut('fast', function(){$(this).remove()}); // 重要！否则事件监听会出问题
 		},
 	
 		cancel: function(e){

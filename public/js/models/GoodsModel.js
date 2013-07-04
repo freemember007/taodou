@@ -5,6 +5,7 @@ define([
 	var GoodsModel = Backbone.Model.extend({
 
 		urlRoot: '/api/Goods',
+        idAttribute: '_id',
 
 		defaults: {
 			

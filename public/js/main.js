@@ -1,7 +1,8 @@
 require.config({
 	paths: {
+        //'require': 'components/requirejs/require',
 		'jquery': 'components/jquery/jquery.min',
-		'bootstrap': 'components/bootstrap/docs/assets/js/bootstrap.min',
+		//'bootstrap': 'components/bootstrap/docs/assets/js/bootstrap.min',
 		'doT': 'components/doT/doT.min',
 		'text': 'components/text/text',
         'domReady': 'components/requirejs-domready/domReady',
@@ -14,16 +15,21 @@ require.config({
 		// 'get-size': 'components/get-size/get-size',
 		// 'get-style-property': 'components/get-style-property/get-style-property'
 	},
-     shim: {
-        // 	'backbone': {
-        // 		deps: ['underscore'],
-        // 		exports: 'Backbone'
-        // 	}
+    shim: {
+        'backbone': {
+            deps: ['underscore', 'jquery'],
+            exports: 'Backbone'
+        },
+        'underscore':{
+            exports: '_'
+        },
         'lazyload': {
-            deps: ['jquery'] //貌似此句可有可无 
+            deps: ['jquery'], //貌似此句可有可无
+            exports: 'jQuery.fn.lazyload'
         }, 
         'xdomainajax': {
-            deps: ['jquery'] //貌似此句可有可无 
+            deps: ['jquery'], //貌似此句可有可无
+            exports: 'jQuery.fn.xdomainajax'
         }
     }
 })

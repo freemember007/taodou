@@ -2,11 +2,12 @@ define([
     'views/LeftView',
     'views/TopView',
 	'views/MainView',
-    'views/DetailView'
-], function(LeftView, TopView, MainView, DetailView) {
+    'views/DetailView',
+    'collections/GoodsCollection'
+], function(LeftView, TopView, MainView, DetailView, GoodsCollection) {
 	
     // ------------------ 定义路由组件 ---------------- //
-
+    var goodsCollection = new GoodsCollection();
 	var MainRouter = Backbone.Router.extend({
 
 		routes: {
@@ -22,17 +23,28 @@ define([
 		},
 
         /* 按商城或类别显示 */
-        showType: function(type, name) {
-            //MainView.url = 'a'
-            console.log(MainView.prototype.collection)
-            var mainView = new MainView(); //与下面的mainView的关系？ 
-            var url =  '/api/Goods/' + type + '/' + name;
-            MainView.prototype.render(url);
+        showType: function(type, name) { 
+            goodsCollection.url =  '/api/Goods/' + type + '/' + name;
+            goodsCollection.fetch({
+                success: function(collection, res, option) {
+					console.log('fetch ok!');                    
+                },
+                error: function(collection, res, option) {
+                    alert(res);
+                }
+            });
         },
 
-		defaultAction: function() {
-			var mainView = new MainView();
-            mainView.render();
+        defaultAction: function() {
+            var mainView = new MainView({collection: goodsCollection});
+            goodsCollection.fetch({
+                success: function(collection, res, option) {
+					console.log('fetch ok!');                    
+                },
+                error: function(collection, res, option) {
+                    alert(res);
+                }
+            })
             var leftView = new LeftView();
             leftView.render();
             var topView = new TopView();
@@ -44,7 +56,7 @@ define([
 	// ------------------ 初始化路由组件 ---------------- //
 
 	var init = function(){
-		var mainRouter = new MainRouter;
+		var mainRouter = new MainRouter();
 		Backbone.history.start();
 	};
 

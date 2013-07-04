@@ -2,14 +2,14 @@
 	<div class="" id="detailContainer">
 		<a href="" id="close">×</a>
 		<div class="modal-body">
-			<h3 id='detailTitle'>{{=it.title}}</h3>
-			<img id='detailImage' src='{{=it.image}}'>
+			<h3 id='detailTitle'>{{=it.get('title')}}</h3>
+			<img id='detailImage' src='{{=it.get('image')}}'>
 			
 			<div id="detailPrice">
-				<p>原价:<span id='oldPrice'>￥{{=it.oldPrice}}</span></p>
-				<p>现价:<span id='newPrice'>￥{{=it.newPrice}}</span></p>
-				<p>来源:<span> {{=it.mall}}</span></p>
-				<a target="_blank" href="{{=it.url}}" class="btn btn-warning btn-large" id='buyButton' >立即购买</a>
+				<p>原价:<span id='oldPrice'>￥{{=it.get('oldPrice')}}</span></p>
+				<p>现价:<span id='newPrice'>￥{{=it.get('newPrice')}}</span></p>
+				<p>来源:<span> {{=it.get('mall')}}</span></p>
+				<a target="_blank" href="{{=it.get('url')}}" class="btn btn-warning btn-large" id='buyButton' >立即购买</a>
 				<span class="btn btn-success btn-large" id='buyButton' >分享到微博</span>
 			</div>
 		</div>

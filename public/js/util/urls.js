@@ -1,0 +1,6 @@
+var urls = {
+	tmall: ,
+	jd: '',
+
+
+}

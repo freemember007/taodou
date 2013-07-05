@@ -9,9 +9,10 @@ var needle = require('needle'); //超简单的request插件，自动转码、自
 //var request = require('request'); //专业级的request插件，怪不得近3000人follow
 var cheerio = require('cheerio'); //轻量级DOM解析，风格同jquery，超赞！
 var qs=require('querystring');
-var moment = require('moment');
-var timeNow = moment().format('YYYY-MM-DD hh:mm:ss');
-console.log('现在时间为：' + timeNow);
+var taobao = require('taobao');
+//var moment = require('moment');
+//var timeNow = moment().format('YYYY-MM-DD hh:mm:ss');
+//console.log('现在时间为：' + timeNow);
 Number.prototype.toPercent = function() {
 	return (Math.round(this * 10000) / 100).toFixed(0) + '%';
 };
@@ -62,50 +63,22 @@ function fetchNew(originURL, callback){
 //-------------------- 淘宝、天猫Fetch --------------------//
 
 function fetchTaobao(callback) {
-	var queryStr = '4f7364c91a3626b98330326a134dc5dc' + 'app_key21535453' + 'formatjson' + 'item_id' + productID + 'methodtaobao.ump.promotion.get' + 'sign_methodmd5' + 'timestamp' + timeNow + 'v2.0' + '4f7364c91a3626b98330326a134dc5dc';
-	var sign = crypto.createHash('md5').update(queryStr).digest('hex').toUpperCase();
-	console.log('sign is ' + sign);
-	var query = {
-		method: 'taobao.ump.promotion.get',
-		v: '2.0',
-		format: 'json',
-		item_id: productID,
-		timestamp: timeNow,
+	taobao.config({
 		app_key: '21535453',
-		sign_method: 'md5',
-		sign: sign
-	}
-	var content = qs.stringify(query);
-	var options = {
-		hostname: 'gw.api.taobao.com',
-		port: 80,
-		path: '/router/rest',
-		method: 'POST',
-		headers:{
-			'Content-Type':'application/x-www-form-urlencoded',
-			'Content-Length':content.length
-		}
-	}
-	var req = http.request(options, function(res) {
-		var _data = '';
-		res.on('data', function(chunk){
-			_data += chunk;
-		})
-		res.on('end', function(){
-			console.log(_data);
-			var data = JSON.parse(_data);
-			var promotionInfo = data.ump_promotion_get_response.promotions.promotion_in_item.promotion_in_item;
-			console.log(promotionInfo);
-			if (promotionInfo != undefined) {
-				var _price = promotionInfo[0].item_promo_price;
-				_price = parseFloat(_price.replace(',','')).toFixed(2);
-				console.log(_price);
-			}
-			normalFetch(callback, _price);
-		})
+		app_secret: '4f7364c91a3626b98330326a134dc5dc'
 	});
-	req.write(content);
-	req.end();
+
+	taobao.umpPromotionGet({
+		item_id: productID,
+	}, function(data) {
+		var promotionInfo = data.ump_promotion_get_response.promotions.promotion_in_item.promotion_in_item;
+		if(promotionInfo != undefined){
+			var _price = promotionInfo[0].item_promo_price;
+			_price = parseFloat(_price.replace(',','')).toFixed(2);
+			console.log(_price);
+		}
+		normalFetch(callback, _price);
+	});
 }
 
 //-------------------- 正常Fetch --------------------//

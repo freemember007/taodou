@@ -43,6 +43,7 @@ define([
 					console.log(goodsModel);
 					goodsCollection.add(goodsModel, {at: 0}); // 为何会触发render事件？
 					console.log(goodsCollection.length);
+					$('#add-input').val(null);
 				}
 			})
 		}

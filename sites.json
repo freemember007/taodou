@@ -20,7 +20,7 @@
 		"sitename": "淘宝",
 		"url": "(.*?htm\\?).*?(id=\\d+)",
 		"title": "$('.tb-detail-hd h3').text()",
-		"image": "$('img#J_ImgBooth').attr('src')",
+		"image": "$('img#J_ImgBooth').attr('data-src')",
 		"fetchPrice": "class=\"tb-rmb-num\">"
 	},
 	"tmall": {

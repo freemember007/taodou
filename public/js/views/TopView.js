@@ -35,7 +35,7 @@ define([
 		addGoods: function(){
 			console.log(goodsCollection.length);
 			var originURL = $('#add-input').val();
-			var goodsModel = new GoodsModel({originURL:originURL});
+			var goodsModel = new GoodsModel({originURL:encodeURI(originURL)});
 			goodsModel.save(null, {
 				success: function(model, response, options){
 					console.log(goodsModel.id);

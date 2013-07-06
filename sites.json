@@ -2,7 +2,7 @@
 	"amazon": {
 		"match": "amazon\\.cn|z\\.cn",
 		"sitename": "亚马逊中国",
-		"url": ".*?[A-Z0-9]+",
+		"url": ".*?[A-Z0-9]{10}",
 		"title": "$('h1').text()",
 		"image": "$('#original-main-image').attr('src')",
 		"fetchPrice": "\"dealPrice\"[\\s\\S]*\"price\" : \"|<b class=\"priceLarge\">|<span class=\"priceLarge\">"
@@ -10,7 +10,7 @@
 	"amazonUSA": {
 		"match": "amazon\\.com",
 		"sitename": "亚马逊美国",
-		"url": ".*?[A-Z0-9]+",
+		"url": ".*?[A-Z0-9]{10}",
 		"title": "$('span#btAsinTitle').text()||$('h1').text()",
 		"image": "$('img#main-image').attr('src')",
 		"fetchPrice": "<b class=\"priceLarge\">|<span class=\"a-color-price a-size-large\">"

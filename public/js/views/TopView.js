@@ -29,15 +29,24 @@ define([
 
 		// -------------------------- 事件  -------------------------- //
 		events: {
-			'click #add-button': 'addGoods'
+			'click #add-button': 'addGoods',
+			'focus #add-input': 'focus'
 		},
-		
+
+		focus: function(){
+			$('#add-input').val(null);
+		},
+
 		addGoods: function(){
+			$('#add-button').after('<img id="actInd-small" src="/images/ajax-loader-small.gif" />');
+			$('#add-input').css('background', '#ccc url(/images/ajax-loader.gif) no-repeat fixed right');
 			console.log(goodsCollection.length);
 			var originURL = $('#add-input').val();
 			var goodsModel = new GoodsModel({originURL:encodeURI(originURL)});
 			goodsModel.save(null, {
 				success: function(model, response, options){
+					$('#actInd-small').remove();
+					$('#add-input').css('background', 'none');
 					console.log(goodsModel.id);
 					goodsModel.clear().set(response.data); // 重设model属性
 					console.log(goodsModel);

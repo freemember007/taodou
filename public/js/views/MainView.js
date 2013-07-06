@@ -8,7 +8,6 @@ define([
 	'models/GoodsModel', 
 	'collections/GoodsCollection',
     'views/DetailView',
-    
     'lazyload'
 	], function(domReady, $, Backbone, doT, mainText, GoodsModel, GoodsCollection, DetailView){
     
@@ -34,8 +33,9 @@ define([
 			//   columnWidth: 200
 			// });
         },
-        render: function(){
-            this.$el.html(this.template(this.collection.models));
+        render: function(){	
+			this.$el.html(this.template(this.collection.models));
+			this.$el.css('background', 'none');
             $("img.lazy").lazyload({ effect: 'fadeIn'});
 		},
 

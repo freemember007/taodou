@@ -1,0 +1,63 @@
+body {
+  padding: 0px;
+  margin: 0px;
+  font: 12px "proxima-nova,'Proxima Nova','Helvetica Neue',Helvetica,sans-serif", Helvetica, Arial, sans-serif;
+  background: #ccc;
+}
+a {
+  color: #999;
+}
+a:hover {
+  color: #666;
+  text-decoration: none;
+}
+.lfloat {
+  float: left;
+}
+.rfloat {
+  float: right;
+}
+#rightContainer {
+  margin-left: 240px;
+  height: 900px;
+}
+.item {
+  display: block;
+  height: 320px;
+  width: 180px;
+  overflow: hidden;
+}
+.thumbLink {
+  display: block;
+  width: 150px;
+  height: 150px;
+}
+.itemDesc {
+  margin-top: 10px;
+  width: 150px;
+  vertical-align: bottom;
+}
+.title {
+  margin-top: 15px;
+  height: 36px;
+  color: #666;
+  line-height: 1.5;
+  display: inline-block;
+  overflow: hidden;
+}
+.itemBottom {
+  margin-top: 5px;
+}
+.itemButtonArea {
+  margin-top: 5px;
+  height: 30px;
+}
+.itemSite {
+  color: #999;
+}
+.itemPrice {
+  color: #f00;
+  font-size: 12px;
+  font-weight: bold;
+  margin-left: 25px;
+}

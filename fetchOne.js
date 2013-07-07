@@ -2,8 +2,8 @@
 var sites, site, productID, fetchURL;
 var postData = {};
 var fs = require('fs');
-var crypto = require('crypto');
-var http = require('http');
+//var crypto = require('crypto');
+//var http = require('http');
 //var http = require('follow-redirects').http; //想用它处理302，但无效
 var needle = require('needle'); //超简单的request插件，自动转码、自动json parse、处理302错误很赞
 //var request = require('request'); //专业级的request插件，怪不得近3000人follow

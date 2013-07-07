@@ -23,6 +23,9 @@
     "follow-redirects": "0.0.3",
     "request": "~2.21.0",
     "taobao": "~1.0.0",
-    "top": "0.0.4"
+    "top": "0.0.4",
+    "fetch": "~0.3.1",
+    "node-curl": "~0.3.1",
+    "async": "~0.2.9"
   }
 }

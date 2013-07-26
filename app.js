@@ -1,15 +1,24 @@
 /**
  * Module dependencies.
  */
-
+var util = require('util');
 var express = require('express')
 	, RedisStore = require('connect-redis')(express)
 	, routes = require('./routes');
-
 var app = module.exports = express();
 
-// Configuration
 
+// Task
+var grab = require('./grab.js');
+var cronJob = require('cron').CronJob;
+new cronJob('0 */10 * * * *', function(){
+    grab.start();
+	}, function () {
+    console.log('哦，糟糕，任务意外终止了。。。');
+}, true, 'Asia/Chongqing');
+
+
+// Configuration
 app.configure(function(){
 	// app.set("view options", {layout: false});
 	// app.set('views', __dirname + '/views');
@@ -35,6 +44,7 @@ app.configure('production', function(){
 	app.use(express.errorHandler());
 });
 
+
 // Routes
 app.get('/', routes.index);
 app.post('/api/reg', routes.reg);
@@ -42,7 +52,10 @@ app.post('/api/login', routes.login);
 app.get('/api/logout', routes.logout);
 app.get('/api/Goods/:type?/:name?', routes.Goods);
 app.post('/api/Goods', routes.Goods);
+app.get('/api/deals', routes.deals);
 
 app.listen(process.env.VCAP_APP_PORT || 3000, function(){
 	console.log("Express server listening on port %d in %s mode", 'app.address().port', app.settings.env);
 });
+
+

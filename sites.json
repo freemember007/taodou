@@ -2,7 +2,7 @@
 	"amazon": {
 		"match": "amazon\\.cn|z\\.cn",
 		"sitename": "亚马逊中国",
-		"url": ".*?[A-Z0-9]{10}",
+		"url": ".*?[A-Za-z0-9]{10}",
 		"title": "$('h1').text()",
 		"image": "$('#original-main-image').attr('src')",
 		"fetchPrice": "\"dealPrice\"[\\s\\S]*\"price\" : \"|<b class=\"priceLarge\">|<span class=\"priceLarge\">"

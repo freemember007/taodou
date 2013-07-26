@@ -31,6 +31,8 @@ a:hover {
   display: block;
   width: 150px;
   height: 150px;
+  overflow: hidden;
+  border: 5 solid #fff;
 }
 .itemDesc {
   margin-top: 10px;

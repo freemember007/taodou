@@ -19,6 +19,7 @@ define([
 		routes: {
 			'logout': 'logout',
 			':type/:name': 'showType',
+			'deals': 'deals',
 			'*actions': 'defaultAction'
 		},
 
@@ -30,15 +31,21 @@ define([
 
 		/* 按商城或类别显示 */
 		showType: function(type, name) { 
-				mainView.collection.url =  '/api/Goods/' + type + '/' + name;
-				mainView.collection.fetch();
+			mainView.collection.url =  '/api/Goods/' + type + '/' + name;
+			mainView.collection.fetch();
+		},
+
+		/* 精品导购 new! */
+		deals: function() {
+			mainView.collection.url =  '/api/deals';
+			mainView.collection.fetch();
 		},
 
 		defaultAction: function() {
-				mainView.collection.fetch()
+			mainView.collection.fetch()
 		}
 		
-		});
+	});
 
 	// ------------------ 初始化路由组件 ---------------- //
 

@@ -4,23 +4,22 @@
 		<!--******************** 略缩图 ***********************-->
 
 		<a href='#detail' class='thumbLink'>
-			<img width='150' src='images/grey.gif' data-original='{{=value.get('image')}}'
-            info='{{!JSON.stringify(value.attributes)}}'
-            modelID='{{=value.get('_id')}}' class='img-polaroid lazy' alt='' />
+			<img width='150' src='{{=value.get('simage') || 'images/grey.gif'}}' data-original='{{=value.get('image')}}' modelID='{{=value.get('_id')}}' class='{{=value.get('simage') || 'lazy'}} img-polaroid' alt='' />
 		</a>
 
 		<!--******************** 描述区块 ***********************-->
 
 		<div class="itemDesc">
 			<!-- 商品标题 -->
-			<a class='title' target='_blank' href='{{=value.get('url')}}'>{{=value.get('title')}}</a>
+			<a class='title' target='_blank' href='{{=value.get('url') ||
+                value.get('blink')}}'>{{=value.get('title')}}</a>
 			<br/>
 
 			<!-- 价格信息 -->
 			<div class="itemBottom">
-				<!-- <span class=''>原价:{{=value.get('oldPrice')}}</span> -->
-				<span class='itemSite'>{{=value.get('mall')}}</span>
-				<span class='itemPrice'>￥{{=value.get('newPrice')}}</span>
+				<span class='itemSite'>{{=value.get('source') || value.get('mall')}}</span>
+				<span
+                    class='itemPrice'>{{=value.get('currency')||'￥'}}{{=value.get('newPrice')||value.get('price')}}</span>
 			</div>
 			
 			<!-- <span class='priceChange'>降幅:&nbsp;

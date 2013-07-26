@@ -5,6 +5,7 @@ var mongoose = require('mongoose')
 	, models = require('../models')
 	, User = models.User
 	, Goods = models.Goods
+	, Deal = models.Deal
 	, crypto = require('crypto')
 	, fetch = require('../fetchOne.js');
 
@@ -40,11 +41,11 @@ exports.Goods = function(req, res) {
 			})
 		}
 	} else if (req.method == 'GET') {
-			var q = {};
-			req.params.type == 'mall' ? q.mall =
-			req.params.name||/.*?/ : q.mall = req.params.name||/.*?/;
-			//字段加catelog后，把后面的mall改为catelog
-			Goods.find(q, null, {sort: [['_id', -1]]}, function(err,goods){
+		var q = {};
+		req.params.type == 'mall' ? q.mall =
+		req.params.name||/.*?/ : q.mall = req.params.name||/.*?/;
+		//字段加catelog后，把后面的mall改为catelog
+		Goods.find(q, null, {sort: [['_id', -1]]}, function(err,goods){
 			if (err) {
 				console.log(err);
 				return res.json({type: 'fail', data: err.message })
@@ -53,6 +54,19 @@ exports.Goods = function(req, res) {
 		})
 	}
 };
+
+/*
+ * deals路由.
+ */
+exports.deals = function(req, res){
+	Deal.find({}, null, {sort: [['_id', -1]]}, function(err,deals){
+		if (err) {
+			console.log(err);
+			return res.json({type: 'fail', data: err.message })
+		}
+		return res.json({type: 'success', data: deals })
+	})
+}
 
 /*
  * 注册路由.

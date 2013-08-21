@@ -59,7 +59,7 @@ exports.Goods = function(req, res) {
  * deals路由.
  */
 exports.deals = function(req, res){
-	Deal.find({}, null, {sort: [['_id', -1]]}, function(err,deals){
+	Deal.find({}, null, {sort: [['_id', -1]], limit: 50}, function(err,deals){
 		if (err) {
 			console.log(err);
 			return res.json({type: 'fail', data: err.message })

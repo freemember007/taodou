@@ -2,6 +2,7 @@
 var sites, site, productID, fetchURL;
 var postData = {};
 var fs = require('fs');
+var util = require('util');
 //var crypto = require('crypto');
 //var http = require('http');
 //var http = require('follow-redirects').http; //想用它处理302，但无效
@@ -67,7 +68,14 @@ function fetchTaobao(callback) {
 		app_key: '21535453',
 		app_secret: '4f7364c91a3626b98330326a134dc5dc'
 	});
-
+	taobao.taobaokeWidgetItemsConvert({
+		num_iids: productID,
+		fields: 'click_url'
+	}, function(data){
+		console.log(util.inspect(data));
+		
+	})
+	//return;
 	taobao.umpPromotionGet({
 		item_id: productID,
 	}, function(data) {
@@ -104,3 +112,4 @@ function normalFetch(callback, apiPrice){
 		callback(postData);
 	});	
 }
+

@@ -10,13 +10,15 @@ var app = module.exports = express();
 
 // Task
 var grab = require('./grab.js');
+//grab.start();
 var cronJob = require('cron').CronJob;
-new cronJob('0 */10 * * * *', function(){
-    grab.start();
-	}, function () {
-    console.log('哦，糟糕，任务意外终止了。。。');
-}, true, 'Asia/Chongqing');
-
+var job = new cronJob({
+	cronTime: '00 */10 * * * *',
+	onTick: function(){util.log('job start...'); grab.start()},
+	start: false, //立即开始，但基本上要碰运气。先手动开始吧。。。
+	timeZone: 'Asia/Chongqing'
+});
+job.start();
 
 // Configuration
 app.configure(function(){

@@ -1,5 +1,5 @@
 //----------------- 变量与环境 -----------------//
-var dealSites;
+var dealSites, count;
 var util = require('util')
 	, fs = require('fs')
 	, _ = require('underscore')
@@ -11,12 +11,11 @@ var util = require('util')
 	, Deal = models.Deal;
 
 //----------------- 载入配置文件 -----------------//
-var count = 0;
 exports.start = function(){
-	//util.log(count)
 	//var mongoose = require('mongoose');
 	//mongoose.connection.close();
 	//mongoose.connect('mongodb://localhost/taodou');
+	count = 1;
 	fs.readFile('./dealSites.json', function(err, data) {
 		dealSites = JSON.parse(data);
 		grabList(dealSites[count]);
@@ -25,7 +24,7 @@ exports.start = function(){
 
 //---------------- 抓取dealList -----------------//
 function grabList(dealSite){
-	if (count == dealSites.length) {return };
+	if (count >= dealSites.length) {return util.log('finished!!!')};
 	var dealList = [];
 	util.log('页面下载开始...' + dealSite.url);
 	needle.get(dealSite.url, {timeout: 30000, follow: true}, function(error, res, data){
@@ -120,7 +119,8 @@ function filterData(dealList){
 		util.log(deal.blink);
 		var fetch = new FetchStream(deal.blink, {timeout: 30000});
 		fetch.on('error', function(err){
-			callback(err); // 貌似这样挺危险，那我想继续怎么办？
+			util.log(err); // 貌似这样挺危险，那我想继续怎么办？
+			saveDeal(dealList); //为避免多个callback错误, 此外不走callback
 		});
 		fetch.on('meta', function(meta){
 			deal.blink = unescape(meta.finalUrl);
@@ -139,14 +139,15 @@ function filterData(dealList){
 							deal.blink = (deal.blink.match(urlReg)||[])[0]||deal.blink;
 							util.log(deal.blink);
 						}
-						return callback();
+						return;
 					}	
 				}
-			})	
+			})
+			callback();
 		});
 	}, function(err) {
-		if(err) { util.log(err) }
-		util.log('all blink update!');
+		if(err) { util.log(err); }
+		util.log('all update!');
 		saveDeal(dealList);
 	})
 }
@@ -154,7 +155,7 @@ function filterData(dealList){
 //---------------- 保存deal数据 -----------------//
 function saveDeal(dealList){
 	async.each(dealList, function(deal, callback) {
-	var newDeal = new Deal(deal);
+		var newDeal = new Deal(deal);
 		newDeal.save(function(err){
 			if (err) { util.log(err) };
 			callback();
